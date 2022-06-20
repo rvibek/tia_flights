@@ -1,31 +1,27 @@
-on: 
-  workflow_dispatch:
-    jobs:
-    # python installtion
-    install-python:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.8"]
-
+name: manual
+'on':
+  workflow_dispatch: null
+jobs:
+  install-python: null
+  runs-on: ubuntu-latest
+  strategy:
+    matrix:
+      python-version:
+        - '3.8'
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: 'Set up Python ${{ matrix.python-version }}'
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
-
-
-        
+          python-version: '${{ matrix.python-version }}'
       - name: cml
         env:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-
+          repo_token: '${{ secrets.GITHUB_TOKEN }}'
         run: |
-          
+
           pip install -r requirements.txt --upgrade pip
           python3 tia_flights.py
-          
+
           # cat result.txt >> tmpresult.txt
 
           # python3 scrap_jhu.py "Switzerland"
@@ -33,9 +29,6 @@ on:
           # python3 scrap_jhu.py "Denmark"
           # python3 scrap_jhu.py "India"
           # python3 scrap_jhu.py "Nepal"
-          
-
-          
       - name: Commit files
         id: commit
         run: |
@@ -49,9 +42,8 @@ on:
             echo "::set-output name=push::true"
           fi
         shell: bash
-    
       - name: Push changes
         if: steps.commit.outputs.push == 'true'
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: '${{ secrets.GITHUB_TOKEN }}'
