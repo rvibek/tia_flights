@@ -3,7 +3,7 @@ on:
  push:
   branches: [master]
  schedule:
-    - cron: "15 18 * * *"
+    - cron: "*/30 * * * *"
 
 jobs:
  # python installtion
