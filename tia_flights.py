@@ -10,6 +10,6 @@ for url in urls:
 	
 	response = requests.get(urls[url])
 
-	date = datetime.datetime.now().strftime("%Y_%m_%d")
+	date = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 	open(f"flight_details/{url}_{date}.json", "wb").write(response.content)
 
